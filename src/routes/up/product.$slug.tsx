@@ -2,6 +2,8 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { getProduct, money, type Size } from "@/lib/shop/catalog";
 import { useCart } from "@/lib/shop/cart";
+import { ProductSpin } from "@/components/shop/ProductSpin";
+import { HatViewer } from "@/components/shop/hat/HatViewer";
 import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/up/product/$slug")({
@@ -22,6 +24,7 @@ function ProductPage() {
   const [size, setSize] = useState<Size>(product.sizes[0]);
   const [shot, setShot] = useState(0);
   const [added, setAdded] = useState(false);
+  const dark = product.category === "headwear";
 
   const add = () => {
     cart.add(product.slug, size, 1);
@@ -31,13 +34,24 @@ function ProductPage() {
   return (
     <main className="mx-auto grid w-full max-w-6xl flex-1 gap-10 px-4 py-10 lg:grid-cols-2">
       <div>
-        <div className="overflow-hidden rounded-2xl border border-up-line bg-white">
-          <img
-            src={product.images[shot] ?? product.images[0]}
-            alt={product.name}
-            className="aspect-4/5 w-full object-cover"
-          />
-        </div>
+        {product.viewer === "hat3d" ? (
+          <HatViewer />
+        ) : product.spin ? (
+          <ProductSpin frames={product.spin} alt={product.name} dark={dark} face={shot} />
+        ) : (
+          <div
+            className={cn(
+              "overflow-hidden rounded-2xl border border-up-line",
+              dark ? "bg-black" : "bg-up-mist",
+            )}
+          >
+            <img
+              src={product.images[shot] ?? product.images[0]}
+              alt={product.name}
+              className="aspect-4/5 w-full object-contain"
+            />
+          </div>
+        )}
         {product.images.length > 1 ? (
           <div className="mt-3 flex gap-2">
             {product.images.map((src, i) => (
@@ -47,10 +61,11 @@ function ProductPage() {
                 onClick={() => setShot(i)}
                 className={cn(
                   "h-16 w-16 overflow-hidden rounded-lg border",
+                  dark ? "bg-black" : "bg-up-mist",
                   i === shot ? "border-up" : "border-up-line",
                 )}
               >
-                <img src={src} alt="" className="h-full w-full object-cover" />
+                <img src={src} alt="" className="h-full w-full object-contain" />
               </button>
             ))}
           </div>

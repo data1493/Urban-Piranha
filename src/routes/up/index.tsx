@@ -89,11 +89,19 @@ function ProductCard({ product }: { product: Product }) {
       params={{ slug: product.slug }}
       className="group block overflow-hidden rounded-2xl border border-up-line bg-white hover:border-up"
     >
-      <div className="relative aspect-4/5 overflow-hidden bg-up-mist">
+      <div
+        className={cn(
+          "relative aspect-4/5 overflow-hidden",
+          product.category === "headwear" ? "bg-black" : "bg-up-mist",
+        )}
+      >
         <img
           src={product.images[0]}
           alt=""
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          className={cn(
+            "h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]",
+            product.category === "headwear" ? "bg-black" : "bg-up-mist",
+          )}
         />
         {product.badge ? (
           <span className="absolute top-3 left-3 rounded-full bg-up px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase">

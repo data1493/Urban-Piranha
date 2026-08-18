@@ -11,6 +11,8 @@ export type Product = {
   images: string[];
   sizes: Size[];
   badge?: string;
+  spin?: string[];
+  viewer?: "hat3d";
 };
 
 export const PRODUCTS: Product[] = [
@@ -23,9 +25,10 @@ export const PRODUCTS: Product[] = [
     tagline: "Ride urban. Live salty.",
     blurb:
       "Heavyweight black tee. Front piranha, back slogan. Cut for the street, the deck, and the night.",
-    images: ["/brand/up/tee-black.png"],
+    images: ["/brand/up/tee-black-front.png", "/brand/up/tee-black-back.png"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     badge: "Core",
+    spin: ["/brand/up/tee-black-front.png", "/brand/up/tee-black-back.png"],
   },
   {
     slug: "ride-urban-tee-white",
@@ -34,19 +37,9 @@ export const PRODUCTS: Product[] = [
     category: "tees",
     color: "White",
     tagline: "Ride urban. Live salty.",
-    blurb: "White heavyweight tee. Black piranha mark and slogan. Clean enough for Sunday, salty enough for the rest.",
+    blurb:
+      "White heavyweight tee. Front: black piranha. Back: Ride Urban. Live Salty. Same shirt, two shots.",
     images: ["/brand/up/tee-white.png", "/brand/up/tee-white-back.png"],
-    sizes: ["S", "M", "L", "XL", "XXL"],
-  },
-  {
-    slug: "bite-mark-tee",
-    name: "Bite Mark Tee",
-    price: 44,
-    category: "tees",
-    color: "White",
-    tagline: "Small mark. Big bite.",
-    blurb: "White tee with the piranha hit on the back. Quiet until you turn around.",
-    images: ["/brand/up/tee-white-back.png"],
     sizes: ["S", "M", "L", "XL", "XXL"],
   },
   {
@@ -57,8 +50,10 @@ export const PRODUCTS: Product[] = [
     color: "Black / Red",
     tagline: "Fitted. Fanged.",
     blurb: "Black New Era 59FIFTY. Piranha-wave embroidery and dripping URBAN PIRANHA wordmark.",
-    images: ["/brand/up/hat-piranha.png"],
+    images: ["/brand/up/hat-piranha-front.png", "/brand/up/hat-piranha-side.png"],
     sizes: ["OS"],
+    viewer: "hat3d",
+    spin: ["/brand/up/hat-piranha-front.png", "/brand/up/hat-piranha-side.png"],
   },
   {
     slug: "wave-rhythm-59fifty",
