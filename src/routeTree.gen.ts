@@ -10,20 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as MapsRouteImport } from './routes/maps'
-import { Route as NotFoundRouteImport } from './routes/not-found'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as UpRouteImport } from './routes/up'
-import { Route as VexRouteImport } from './routes/vex'
 import { Route as UpIndexRouteImport } from './routes/up/index'
+import { Route as UpAboutRouteImport } from './routes/up/about'
+import { Route as UpAccountRouteImport } from './routes/up/account'
 import { Route as UpCartRouteImport } from './routes/up/cart'
 import { Route as UpCheckoutRouteImport } from './routes/up/checkout'
+import { Route as UpContactRouteImport } from './routes/up/contact'
+import { Route as UpFaqRouteImport } from './routes/up/faq'
+import { Route as UpPrivacyRouteImport } from './routes/up/privacy'
+import { Route as UpShippingRouteImport } from './routes/up/shipping'
+import { Route as UpSizeGuideRouteImport } from './routes/up/size-guide'
+import { Route as UpTermsRouteImport } from './routes/up/terms'
+import { Route as UpThanksRouteImport } from './routes/up/thanks'
+import { Route as UpTrackRouteImport } from './routes/up/track'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe.webhook'
 import { Route as UpProductSlugRouteImport } from './routes/up/product.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,44 +34,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdvertiseRoute = AdvertiseRouteImport.update({
-  id: '/advertise',
-  path: '/advertise',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MapsRoute = MapsRouteImport.update({
-  id: '/maps',
-  path: '/maps',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotFoundRoute = NotFoundRouteImport.update({
-  id: '/not-found',
-  path: '/not-found',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SearchRoute = SearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UpRoute = UpRouteImport.update({
@@ -76,14 +44,19 @@ const UpRoute = UpRouteImport.update({
   path: '/up',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VexRoute = VexRouteImport.update({
-  id: '/vex',
-  path: '/vex',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UpIndexRoute = UpIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpAboutRoute = UpAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpAccountRoute = UpAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
   getParentRoute: () => UpRoute,
 } as any)
 const UpCartRoute = UpCartRouteImport.update({
@@ -96,9 +69,54 @@ const UpCheckoutRoute = UpCheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => UpRoute,
 } as any)
+const UpContactRoute = UpContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpFaqRoute = UpFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpPrivacyRoute = UpPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpShippingRoute = UpShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpSizeGuideRoute = UpSizeGuideRouteImport.update({
+  id: '/size-guide',
+  path: '/size-guide',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpTermsRoute = UpTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpThanksRoute = UpThanksRouteImport.update({
+  id: '/thanks',
+  path: '/thanks',
+  getParentRoute: () => UpRoute,
+} as any)
+const UpTrackRoute = UpTrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => UpRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UpProductSlugRoute = UpProductSlugRouteImport.update({
@@ -109,127 +127,138 @@ const UpProductSlugRoute = UpProductSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/advertise': typeof AdvertiseRoute
   '/login': typeof LoginRoute
-  '/maps': typeof MapsRoute
-  '/not-found': typeof NotFoundRoute
-  '/privacy': typeof PrivacyRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
   '/up': typeof UpRouteWithChildren
-  '/vex': typeof VexRoute
+  '/up/about': typeof UpAboutRoute
+  '/up/account': typeof UpAccountRoute
   '/up/cart': typeof UpCartRoute
   '/up/checkout': typeof UpCheckoutRoute
+  '/up/contact': typeof UpContactRoute
+  '/up/faq': typeof UpFaqRoute
+  '/up/privacy': typeof UpPrivacyRoute
+  '/up/shipping': typeof UpShippingRoute
+  '/up/size-guide': typeof UpSizeGuideRoute
+  '/up/terms': typeof UpTermsRoute
+  '/up/thanks': typeof UpThanksRoute
+  '/up/track': typeof UpTrackRoute
   '/up/': typeof UpIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/up/product/$slug': typeof UpProductSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/advertise': typeof AdvertiseRoute
   '/login': typeof LoginRoute
-  '/maps': typeof MapsRoute
-  '/not-found': typeof NotFoundRoute
-  '/privacy': typeof PrivacyRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/vex': typeof VexRoute
+  '/up/about': typeof UpAboutRoute
+  '/up/account': typeof UpAccountRoute
   '/up/cart': typeof UpCartRoute
   '/up/checkout': typeof UpCheckoutRoute
+  '/up/contact': typeof UpContactRoute
+  '/up/faq': typeof UpFaqRoute
+  '/up/privacy': typeof UpPrivacyRoute
+  '/up/shipping': typeof UpShippingRoute
+  '/up/size-guide': typeof UpSizeGuideRoute
+  '/up/terms': typeof UpTermsRoute
+  '/up/thanks': typeof UpThanksRoute
+  '/up/track': typeof UpTrackRoute
   '/up': typeof UpIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/up/product/$slug': typeof UpProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/advertise': typeof AdvertiseRoute
   '/login': typeof LoginRoute
-  '/maps': typeof MapsRoute
-  '/not-found': typeof NotFoundRoute
-  '/privacy': typeof PrivacyRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
   '/up': typeof UpRouteWithChildren
-  '/vex': typeof VexRoute
+  '/up/about': typeof UpAboutRoute
+  '/up/account': typeof UpAccountRoute
   '/up/cart': typeof UpCartRoute
   '/up/checkout': typeof UpCheckoutRoute
+  '/up/contact': typeof UpContactRoute
+  '/up/faq': typeof UpFaqRoute
+  '/up/privacy': typeof UpPrivacyRoute
+  '/up/shipping': typeof UpShippingRoute
+  '/up/size-guide': typeof UpSizeGuideRoute
+  '/up/terms': typeof UpTermsRoute
+  '/up/thanks': typeof UpThanksRoute
+  '/up/track': typeof UpTrackRoute
   '/up/': typeof UpIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/up/product/$slug': typeof UpProductSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/advertise'
     | '/login'
-    | '/maps'
-    | '/not-found'
-    | '/privacy'
-    | '/search'
-    | '/settings'
     | '/up'
-    | '/vex'
+    | '/up/about'
+    | '/up/account'
     | '/up/cart'
     | '/up/checkout'
+    | '/up/contact'
+    | '/up/faq'
+    | '/up/privacy'
+    | '/up/shipping'
+    | '/up/size-guide'
+    | '/up/terms'
+    | '/up/thanks'
+    | '/up/track'
     | '/up/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
     | '/up/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/advertise'
     | '/login'
-    | '/maps'
-    | '/not-found'
-    | '/privacy'
-    | '/search'
-    | '/settings'
-    | '/vex'
+    | '/up/about'
+    | '/up/account'
     | '/up/cart'
     | '/up/checkout'
+    | '/up/contact'
+    | '/up/faq'
+    | '/up/privacy'
+    | '/up/shipping'
+    | '/up/size-guide'
+    | '/up/terms'
+    | '/up/thanks'
+    | '/up/track'
     | '/up'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
     | '/up/product/$slug'
   id:
     | '__root__'
     | '/'
-    | '/about'
-    | '/advertise'
     | '/login'
-    | '/maps'
-    | '/not-found'
-    | '/privacy'
-    | '/search'
-    | '/settings'
     | '/up'
-    | '/vex'
+    | '/up/about'
+    | '/up/account'
     | '/up/cart'
     | '/up/checkout'
+    | '/up/contact'
+    | '/up/faq'
+    | '/up/privacy'
+    | '/up/shipping'
+    | '/up/size-guide'
+    | '/up/terms'
+    | '/up/thanks'
+    | '/up/track'
     | '/up/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
     | '/up/product/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  AdvertiseRoute: typeof AdvertiseRoute
   LoginRoute: typeof LoginRoute
-  MapsRoute: typeof MapsRoute
-  NotFoundRoute: typeof NotFoundRoute
-  PrivacyRoute: typeof PrivacyRoute
-  SearchRoute: typeof SearchRoute
-  SettingsRoute: typeof SettingsRoute
   UpRoute: typeof UpRouteWithChildren
-  VexRoute: typeof VexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -241,60 +270,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/advertise': {
-      id: '/advertise'
-      path: '/advertise'
-      fullPath: '/advertise'
-      preLoaderRoute: typeof AdvertiseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/maps': {
-      id: '/maps'
-      path: '/maps'
-      fullPath: '/maps'
-      preLoaderRoute: typeof MapsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/not-found': {
-      id: '/not-found'
-      path: '/not-found'
-      fullPath: '/not-found'
-      preLoaderRoute: typeof NotFoundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/up': {
@@ -304,18 +284,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vex': {
-      id: '/vex'
-      path: '/vex'
-      fullPath: '/vex'
-      preLoaderRoute: typeof VexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/up/': {
       id: '/up/'
       path: '/'
       fullPath: '/up/'
       preLoaderRoute: typeof UpIndexRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/about': {
+      id: '/up/about'
+      path: '/about'
+      fullPath: '/up/about'
+      preLoaderRoute: typeof UpAboutRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/account': {
+      id: '/up/account'
+      path: '/account'
+      fullPath: '/up/account'
+      preLoaderRoute: typeof UpAccountRouteImport
       parentRoute: typeof UpRoute
     }
     '/up/cart': {
@@ -332,11 +319,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpCheckoutRouteImport
       parentRoute: typeof UpRoute
     }
+    '/up/contact': {
+      id: '/up/contact'
+      path: '/contact'
+      fullPath: '/up/contact'
+      preLoaderRoute: typeof UpContactRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/faq': {
+      id: '/up/faq'
+      path: '/faq'
+      fullPath: '/up/faq'
+      preLoaderRoute: typeof UpFaqRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/privacy': {
+      id: '/up/privacy'
+      path: '/privacy'
+      fullPath: '/up/privacy'
+      preLoaderRoute: typeof UpPrivacyRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/shipping': {
+      id: '/up/shipping'
+      path: '/shipping'
+      fullPath: '/up/shipping'
+      preLoaderRoute: typeof UpShippingRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/size-guide': {
+      id: '/up/size-guide'
+      path: '/size-guide'
+      fullPath: '/up/size-guide'
+      preLoaderRoute: typeof UpSizeGuideRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/terms': {
+      id: '/up/terms'
+      path: '/terms'
+      fullPath: '/up/terms'
+      preLoaderRoute: typeof UpTermsRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/thanks': {
+      id: '/up/thanks'
+      path: '/thanks'
+      fullPath: '/up/thanks'
+      preLoaderRoute: typeof UpThanksRouteImport
+      parentRoute: typeof UpRoute
+    }
+    '/up/track': {
+      id: '/up/track'
+      path: '/track'
+      fullPath: '/up/track'
+      preLoaderRoute: typeof UpTrackRouteImport
+      parentRoute: typeof UpRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/up/product/$slug': {
@@ -350,15 +400,35 @@ declare module '@tanstack/react-router' {
 }
 
 interface UpRouteChildren {
+  UpAboutRoute: typeof UpAboutRoute
+  UpAccountRoute: typeof UpAccountRoute
   UpCartRoute: typeof UpCartRoute
   UpCheckoutRoute: typeof UpCheckoutRoute
+  UpContactRoute: typeof UpContactRoute
+  UpFaqRoute: typeof UpFaqRoute
+  UpPrivacyRoute: typeof UpPrivacyRoute
+  UpShippingRoute: typeof UpShippingRoute
+  UpSizeGuideRoute: typeof UpSizeGuideRoute
+  UpTermsRoute: typeof UpTermsRoute
+  UpThanksRoute: typeof UpThanksRoute
+  UpTrackRoute: typeof UpTrackRoute
   UpIndexRoute: typeof UpIndexRoute
   UpProductSlugRoute: typeof UpProductSlugRoute
 }
 
 const UpRouteChildren: UpRouteChildren = {
+  UpAboutRoute: UpAboutRoute,
+  UpAccountRoute: UpAccountRoute,
   UpCartRoute: UpCartRoute,
   UpCheckoutRoute: UpCheckoutRoute,
+  UpContactRoute: UpContactRoute,
+  UpFaqRoute: UpFaqRoute,
+  UpPrivacyRoute: UpPrivacyRoute,
+  UpShippingRoute: UpShippingRoute,
+  UpSizeGuideRoute: UpSizeGuideRoute,
+  UpTermsRoute: UpTermsRoute,
+  UpThanksRoute: UpThanksRoute,
+  UpTrackRoute: UpTrackRoute,
   UpIndexRoute: UpIndexRoute,
   UpProductSlugRoute: UpProductSlugRoute,
 }
@@ -367,17 +437,10 @@ const UpRouteWithChildren = UpRoute._addFileChildren(UpRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  AdvertiseRoute: AdvertiseRoute,
   LoginRoute: LoginRoute,
-  MapsRoute: MapsRoute,
-  NotFoundRoute: NotFoundRoute,
-  PrivacyRoute: PrivacyRoute,
-  SearchRoute: SearchRoute,
-  SettingsRoute: SettingsRoute,
   UpRoute: UpRouteWithChildren,
-  VexRoute: VexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

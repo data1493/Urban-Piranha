@@ -17,3 +17,6 @@ screenshots
 .node_modules.lock
 AGENTS.md
 AGENTS.project.md
+tmp-assets
+tmp
+scripts/checkout-debug.mjs

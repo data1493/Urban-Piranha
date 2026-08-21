@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { getProduct, money } from "@/lib/shop/catalog";
+import { FREE_SHIPPING_AT, PRODUCTS, getProduct, money, shippingFor } from "@/lib/shop/catalog";
 import { useCart } from "@/lib/shop/cart";
 
 export const Route = createFileRoute("/up/cart")({
@@ -10,6 +10,9 @@ export const Route = createFileRoute("/up/cart")({
 
 function CartPage() {
   const cart = useCart();
+  const shipping = shippingFor(cart.subtotal);
+  const remain = Math.max(0, FREE_SHIPPING_AT - cart.subtotal);
+  const progress = Math.min(100, (cart.subtotal / FREE_SHIPPING_AT) * 100);
 
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-10">
@@ -23,10 +26,39 @@ function CartPage() {
           >
             Shop the drop
           </Link>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+            {PRODUCTS.slice(0, 3).map((p) => (
+              <li key={p.slug}>
+                <Link
+                  to="/up/product/$slug"
+                  params={{ slug: p.slug }}
+                  className="block overflow-hidden rounded-2xl border border-up-line bg-white"
+                >
+                  <img src={p.images[0]} alt="" className="aspect-4/5 w-full object-contain bg-up-mist" />
+                  <p className="px-3 py-3 text-sm font-semibold text-up-ink">{p.name}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       ) : (
         <>
-          <ul className="mt-8 divide-y divide-up-line border-y border-up-line">
+          <div className="mt-6 rounded-2xl border border-up-line bg-white p-4">
+            <p className="text-sm text-up-ink">
+              {remain > 0 ? (
+                <>
+                  Add <span className="font-semibold text-up">{money(remain)}</span> for free shipping.
+                </>
+              ) : (
+                <span className="font-semibold text-up">Free shipping unlocked.</span>
+              )}
+            </p>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-up-mist">
+              <div className="h-full rounded-full bg-up" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+
+          <ul className="mt-6 divide-y divide-up-line border-y border-up-line">
             {cart.lines.map((line) => {
               const p = getProduct(line.slug);
               if (!p) return null;
@@ -56,7 +88,7 @@ function CartPage() {
                         type="button"
                         aria-label="Decrease"
                         onClick={() => cart.setQty(line.slug, line.size, line.qty - 1)}
-                        className="grid size-8 place-items-center rounded-full border border-up-line"
+                        className="grid size-11 place-items-center rounded-full border border-up-line"
                       >
                         <Minus className="size-3.5" />
                       </button>
@@ -65,7 +97,7 @@ function CartPage() {
                         type="button"
                         aria-label="Increase"
                         onClick={() => cart.setQty(line.slug, line.size, line.qty + 1)}
-                        className="grid size-8 place-items-center rounded-full border border-up-line"
+                        className="grid size-11 place-items-center rounded-full border border-up-line"
                       >
                         <Plus className="size-3.5" />
                       </button>
@@ -73,7 +105,7 @@ function CartPage() {
                         type="button"
                         aria-label="Remove"
                         onClick={() => cart.remove(line.slug, line.size)}
-                        className="ml-2 text-up-mute hover:text-up-ink"
+                        className="ml-2 grid size-11 place-items-center text-up-mute hover:text-up-ink"
                       >
                         <Trash2 className="size-4" />
                       </button>
@@ -84,13 +116,18 @@ function CartPage() {
             })}
           </ul>
 
-          <div className="mt-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <p className="text-lg font-semibold text-up-ink">
-              Subtotal <span className="text-up">{money(cart.subtotal)}</span>
-            </p>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm text-up-mute">
+                Shipping {shipping === 0 ? "Free" : money(shipping)}
+              </p>
+              <p className="text-lg font-semibold text-up-ink">
+                Total <span className="text-up">{money(cart.subtotal + shipping)}</span>
+              </p>
+            </div>
             <Link
               to="/up/checkout"
-              className="inline-flex h-12 items-center rounded-full bg-up px-8 text-sm font-semibold text-white hover:bg-up-bright"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-up px-8 text-sm font-semibold text-white hover:bg-up-bright"
             >
               Checkout
             </Link>

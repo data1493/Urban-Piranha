@@ -173,6 +173,7 @@
   background: var(--color-up-paper);
   color: var(--color-up-ink);
   min-height: 100%;
+  overflow-x: clip;
 }
 
 .up-shop *:focus-visible {

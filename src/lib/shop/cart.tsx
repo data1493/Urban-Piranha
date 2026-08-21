@@ -54,7 +54,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
           const i = prev.findIndex((l) => l.slug === slug && l.size === size);
           if (i >= 0) {
             const next = [...prev];
-            next[i] = { ...next[i], qty: next[i].qty + qty };
+            const cur = next[i];
+            if (cur) next[i] = { ...cur, qty: cur.qty + qty };
             return next;
           }
           return [...prev, { slug, size, qty }];

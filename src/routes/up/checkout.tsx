@@ -1,7 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { FormEvent, useState } from "react";
-import { getProduct, money } from "@/lib/shop/catalog";
+import { FormEvent, useEffect, useState } from "react";
+import { getProduct, money, shippingFor } from "@/lib/shop/catalog";
 import { useCart } from "@/lib/shop/cart";
+import { createCheckout, stripeStatus } from "@/lib/shop/api";
+import { useCurrentUser } from "@/lib/auth/use-current-user";
 
 export const Route = createFileRoute("/up/checkout")({
   component: CheckoutPage,
@@ -10,47 +12,61 @@ export const Route = createFileRoute("/up/checkout")({
 
 function CheckoutPage() {
   const cart = useCart();
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const user = useCurrentUser();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subscribe, setSubscribe] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [stripeReady, setStripeReady] = useState<boolean | null>(null);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (user?.displayName) setName((n) => n || user.displayName || "");
+    if (user?.primaryEmail) setEmail((e) => e || user.primaryEmail || "");
+  }, [user]);
+
+  useEffect(() => {
+    stripeStatus()
+      .then((s) => setStripeReady(s.ready))
+      .catch(() => setStripeReady(false));
+  }, []);
+
+  const shipping = shippingFor(cart.subtotal);
+  const total = cart.subtotal + shipping;
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!cart.lines.length) return;
-    const data = new FormData(e.currentTarget);
-    const id = `UP-${Date.now().toString(36).toUpperCase()}`;
-    const order = {
-      id,
-      name: String(data.get("name") ?? ""),
-      email: String(data.get("email") ?? ""),
-      address: String(data.get("address") ?? ""),
-      city: String(data.get("city") ?? ""),
-      zip: String(data.get("zip") ?? ""),
-      lines: cart.lines,
-      total: cart.subtotal,
-      at: Date.now(),
-    };
-    const prev = JSON.parse(localStorage.getItem("up:orders") || "[]") as unknown[];
-    localStorage.setItem("up:orders", JSON.stringify([order, ...prev].slice(0, 30)));
-    cart.clear();
-    setOrderId(id);
+    setBusy(true);
+    setError("");
+    try {
+      const res = await createCheckout({
+        data: {
+          origin: window.location.origin,
+          email,
+          name,
+          subscribe,
+          lines: cart.lines,
+        },
+      });
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      if (res.url) {
+        window.location.href = res.url;
+        return;
+      }
+      if (res.orderId) {
+        cart.clear();
+        window.location.href = `/up/thanks?order=${res.orderId}`;
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Checkout failed.");
+    } finally {
+      setBusy(false);
+    }
   };
-
-  if (orderId) {
-    return (
-      <main className="mx-auto w-full max-w-lg flex-1 px-4 py-16 text-center">
-        <p className="text-[11px] font-bold tracking-[0.22em] text-up uppercase">Locked in</p>
-        <h1 className="font-display mt-2 text-5xl text-up-ink">Order {orderId}</h1>
-        <p className="mt-4 text-sm text-up-mute">
-          Ride urban. Live salty. We saved the ticket — you'll get a ping when it ships.
-        </p>
-        <Link
-          to="/up"
-          className="mt-8 inline-flex h-11 items-center rounded-full bg-up px-6 text-sm font-semibold text-white"
-        >
-          Keep shopping
-        </Link>
-      </main>
-    );
-  }
 
   if (!cart.lines.length) {
     return (
@@ -67,55 +83,54 @@ function CheckoutPage() {
     <main className="mx-auto grid w-full max-w-5xl flex-1 gap-10 px-4 py-10 lg:grid-cols-[1fr_18rem]">
       <form className="grid gap-4" onSubmit={onSubmit}>
         <h1 className="font-display text-5xl text-up-ink">Checkout</h1>
+        <p className="text-sm text-up-mute">
+          {stripeReady
+            ? "Stripe takes the card. Address and phone on the next screen. Guest is fine."
+            : "Preview pay is on until Stripe is connected. Same order ticket either way."}
+        </p>
         <label className="grid gap-1 text-sm">
           <span className="text-up-mute">Name</span>
           <input
-            name="name"
             required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="h-11 rounded-xl border border-up-line bg-white px-3 text-up-ink outline-none focus:border-up"
           />
         </label>
         <label className="grid gap-1 text-sm">
           <span className="text-up-mute">Email</span>
           <input
-            name="email"
             type="email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="h-11 rounded-xl border border-up-line bg-white px-3 text-up-ink outline-none focus:border-up"
           />
         </label>
-        <label className="grid gap-1 text-sm">
-          <span className="text-up-mute">Address</span>
+        <label className="flex items-start gap-3 text-sm text-up-mute">
           <input
-            name="address"
-            required
-            className="h-11 rounded-xl border border-up-line bg-white px-3 text-up-ink outline-none focus:border-up"
+            type="checkbox"
+            checked={subscribe}
+            onChange={(e) => setSubscribe(e.target.checked)}
+            className="mt-1 size-4 accent-up"
           />
+          Put me on the drop list (Mailchimp via Chimp Sheets).
         </label>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="grid gap-1 text-sm">
-            <span className="text-up-mute">City</span>
-            <input
-              name="city"
-              required
-              className="h-11 rounded-xl border border-up-line bg-white px-3 text-up-ink outline-none focus:border-up"
-            />
-          </label>
-          <label className="grid gap-1 text-sm">
-            <span className="text-up-mute">ZIP</span>
-            <input
-              name="zip"
-              required
-              className="h-11 rounded-xl border border-up-line bg-white px-3 text-up-ink outline-none focus:border-up"
-            />
-          </label>
-        </div>
+        {error ? <p className="text-sm text-red-600">{error}</p> : null}
         <button
           type="submit"
-          className="mt-2 h-12 rounded-full bg-up text-sm font-semibold text-white hover:bg-up-bright"
+          disabled={busy}
+          className="mt-2 h-12 rounded-full bg-up text-sm font-semibold text-white hover:bg-up-bright disabled:opacity-60"
         >
-          Place order · {money(cart.subtotal)}
+          {busy ? "Sending you through…" : stripeReady ? `Pay ${money(total)} · Stripe` : `Place order · ${money(total)}`}
         </button>
+        <p className="text-xs text-up-mute">
+          Guest checkout is fine. Sign in if you want the ticket on{" "}
+          <Link to="/login" className="text-up">
+            your account
+          </Link>
+          .
+        </p>
       </form>
 
       <aside className="h-fit rounded-2xl border border-up-line bg-white p-5">
@@ -137,8 +152,12 @@ function CheckoutPage() {
             );
           })}
         </ul>
-        <p className="mt-4 border-t border-up-line pt-3 text-sm font-semibold text-up-ink">
-          Total {money(cart.subtotal)}
+        <p className="mt-3 flex justify-between text-sm text-up-mute">
+          <span>Shipping</span>
+          <span>{shipping === 0 ? "Free" : money(shipping)}</span>
+        </p>
+        <p className="mt-3 border-t border-up-line pt-3 text-sm font-semibold text-up-ink">
+          Total {money(total)}
         </p>
       </aside>
     </main>

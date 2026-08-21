@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ComponentType } from "react";
+import { Suspense, useEffect, useState, type ComponentType } from "react";
 
 export function HatViewer() {
   const [View, setView] = useState<ComponentType | null>(null);
