@@ -92,6 +92,7 @@ export async function createCheckoutSession(data: {
   const meta = chimpMeta({
     cart: cartKey(lines).slice(0, 490),
     name,
+    subscribe: data.subscribe ? "true" : "false",
     ...(userId ? { shop_user_id: userId } : {}),
   });
 
