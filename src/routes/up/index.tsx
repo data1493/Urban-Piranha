@@ -38,8 +38,8 @@ function ShopHome() {
               <span className="text-up">Live salty.</span>
             </h1>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-up-mute sm:text-base">
-              Streetwear from the water and the block. Tees, 59FIFTYs, decks. Limited
-              drops. Paid on Stripe.
+              Streetwear from the water and the block. Tees, hoodies, caps, totes,
+              glass, stickers. Limited drops. Paid on Stripe.
             </p>
             <a
               href="#drop"
