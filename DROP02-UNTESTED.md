@@ -27,6 +27,6 @@ git revert --no-edit 32b6d693eb3f9c20bf40e56837f3b492b3ab5dbc 6ab657a8a22dcd173b
 ```
 Known-good shop snapshot before this merch pass: `c3f0e7a`.
 
-## Photos still to git-add from a real clone
-`public/brand/up/drop02/`:
+## Photos
+`public/brand/up/drop02/` now has:
 hoodie.jpg tee.jpg cap.jpg mug.jpg stein.jpg tote.jpg pouch.jpg bag.jpg sticker.jpg lineup-sheet.jpg
