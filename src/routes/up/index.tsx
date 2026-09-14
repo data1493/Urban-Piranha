@@ -26,24 +26,24 @@ function ShopHome() {
 
   return (
     <main className="flex-1">
-      <section className="relative overflow-hidden border-b border-up-line bg-up-paper">
+      <section className="relative min-h-[34rem] overflow-hidden border-b border-up-line bg-up-paper lg:min-h-0">
         <div className="pointer-events-none absolute inset-0 dark:hidden">
           <img
             src="/brand/up/logo.png"
             alt=""
-            className="h-full w-full object-cover object-center lg:object-[70%_center]"
+            className="h-full w-full object-cover object-[center_70%] lg:object-[70%_center]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#f6f6f4] via-[#f6f6f4]/75 to-[#f6f6f4]/20 lg:via-[#f6f6f4]/45 lg:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#f6f6f4] via-[#f6f6f4]/70 to-transparent lg:bg-gradient-to-r lg:from-[#f6f6f4] lg:via-[#f6f6f4]/45 lg:to-transparent" />
         </div>
         <div className="pointer-events-none absolute inset-0 hidden dark:block">
           <img
             src="/brand/up/logo-dark.png"
             alt=""
-            className="h-full w-full object-cover object-center lg:object-[70%_center]"
+            className="h-full w-full object-cover object-[center_70%] lg:object-[70%_center]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0d10] via-[#0c0d10]/75 to-[#0c0d10]/20 lg:via-[#0c0d10]/45 lg:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0c0d10] via-[#0c0d10]/70 to-transparent lg:bg-gradient-to-r lg:from-[#0c0d10] lg:via-[#0c0d10]/45 lg:to-transparent" />
         </div>
-        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:py-20">
+        <div className="relative mx-auto grid max-w-6xl items-center px-4 py-10 lg:grid-cols-2 lg:py-20">
           <div>
             <p className="text-[11px] font-bold tracking-[0.28em] text-up uppercase">
               Official shop · Drop 01
@@ -63,18 +63,6 @@ function ShopHome() {
             >
               Shop the drop
             </a>
-          </div>
-          <div className="grid place-items-center lg:hidden">
-            <img
-              src="/brand/up/logo-clear.png"
-              alt="UP Urban Piranha"
-              className="w-full max-w-md object-contain dark:hidden"
-            />
-            <img
-              src="/brand/up/logo-dark-clear.png"
-              alt="UP Urban Piranha"
-              className="hidden w-full max-w-sm object-contain dark:block"
-            />
           </div>
         </div>
       </section>
