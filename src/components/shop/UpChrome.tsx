@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import { Menu, Moon, Search, ShoppingBag, Sun, UserRound, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/lib/shop/cart";
 import { searchProducts } from "@/lib/shop/catalog";
@@ -7,14 +7,22 @@ import { cn } from "@/lib/cn";
 import { SignedIn, SignedOut } from "@/lib/auth/gates";
 import { authEnabled, signOut } from "@/lib/auth/client";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
+import { isDarkTheme, toggleTheme } from "@/lib/theme";
 
 export function UpLogo({ className }: { className?: string }) {
   return (
-    <img
-      src="/brand/up/logo-mark.png"
-      alt="Urban Piranha"
-      className={cn("h-12 w-auto object-contain sm:h-14", className)}
-    />
+    <>
+      <img
+        src="/brand/up/logo-mark.png"
+        alt="Urban Piranha"
+        className={cn("h-12 w-auto object-contain sm:h-14 dark:hidden", className)}
+      />
+      <img
+        src="/brand/up/logo-dark-mark.png"
+        alt=""
+        className={cn("hidden h-12 w-auto object-contain sm:h-14 dark:block", className)}
+      />
+    </>
   );
 }
 
@@ -70,6 +78,7 @@ export function UpHeader() {
         </Link>
 
         <div className="flex items-center justify-end gap-0.5">
+          <DarkModeButton />
           <button
             type="button"
             className="inline-flex size-11 items-center justify-center rounded-full text-up-ink hover:bg-up-mist"
@@ -277,6 +286,26 @@ function MenuCol({ title, children }: { title: string; children: React.ReactNode
       <p className="text-[11px] font-bold tracking-[0.22em] text-up uppercase">{title}</p>
       <div className="mt-3">{children}</div>
     </div>
+  );
+}
+
+function DarkModeButton() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    setDark(isDarkTheme());
+  }, []);
+
+  return (
+    <button
+      type="button"
+      className="inline-flex size-11 items-center justify-center rounded-full text-up-ink hover:bg-up-mist"
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={dark}
+      onClick={() => setDark(toggleTheme())}
+    >
+      {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+    </button>
   );
 }
 

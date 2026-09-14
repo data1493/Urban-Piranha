@@ -26,8 +26,16 @@ function ShopHome() {
 
   return (
     <main className="flex-1">
-      <section className="border-b border-up-line bg-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:py-20">
+      <section className="relative overflow-hidden border-b border-up-line bg-up-paper">
+        <div className="pointer-events-none absolute inset-0 hidden dark:block">
+          <img
+            src="/brand/up/logo-dark.png"
+            alt=""
+            className="h-full w-full object-cover object-center lg:object-[70%_center]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0d10] via-[#0c0d10]/75 to-[#0c0d10]/20 lg:via-[#0c0d10]/45 lg:to-transparent" />
+        </div>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:py-20">
           <div>
             <p className="text-[11px] font-bold tracking-[0.28em] text-up uppercase">
               Official shop · Drop 01
@@ -50,9 +58,14 @@ function ShopHome() {
           </div>
           <div className="grid place-items-center">
             <img
-              src="/brand/up/logo.png"
+              src="/brand/up/logo-clear.png"
               alt="UP Urban Piranha"
-              className="w-full max-w-md object-contain"
+              className="w-full max-w-md object-contain dark:hidden"
+            />
+            <img
+              src="/brand/up/logo-dark-clear.png"
+              alt="UP Urban Piranha"
+              className="hidden w-full max-w-sm object-contain dark:block lg:dark:hidden"
             />
           </div>
         </div>

@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-bg: #0d0d0d;
   --color-surface: #141414;
@@ -167,6 +169,19 @@
 .up-banner {
   border: 1px solid color-mix(in oklab, var(--color-ember) 55%, transparent);
   box-shadow: 0 0 24px color-mix(in oklab, var(--color-ember) 12%, transparent);
+}
+
+html.dark {
+  --color-up-paper: #121417;
+  --color-up-ink: #f3f3f1;
+  --color-up-mute: #9c9c98;
+  --color-up-line: #2a2a2a;
+  --color-up-mist: #1a1a1a;
+  color-scheme: dark;
+}
+
+html.dark .up-shop .bg-white {
+  background-color: #161616;
 }
 
 .up-shop {
