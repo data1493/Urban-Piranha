@@ -27,6 +27,14 @@ function ShopHome() {
   return (
     <main className="flex-1">
       <section className="relative overflow-hidden border-b border-up-line bg-up-paper">
+        <div className="pointer-events-none absolute inset-0 dark:hidden">
+          <img
+            src="/brand/up/logo.png"
+            alt=""
+            className="h-full w-full object-cover object-center lg:object-[70%_center]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#f6f6f4] via-[#f6f6f4]/75 to-[#f6f6f4]/20 lg:via-[#f6f6f4]/45 lg:to-transparent" />
+        </div>
         <div className="pointer-events-none absolute inset-0 hidden dark:block">
           <img
             src="/brand/up/logo-dark.png"
@@ -56,7 +64,7 @@ function ShopHome() {
               Shop the drop
             </a>
           </div>
-          <div className="grid place-items-center">
+          <div className="grid place-items-center lg:hidden">
             <img
               src="/brand/up/logo-clear.png"
               alt="UP Urban Piranha"
@@ -65,7 +73,7 @@ function ShopHome() {
             <img
               src="/brand/up/logo-dark-clear.png"
               alt="UP Urban Piranha"
-              className="hidden w-full max-w-sm object-contain dark:block lg:dark:hidden"
+              className="hidden w-full max-w-sm object-contain dark:block"
             />
           </div>
         </div>
